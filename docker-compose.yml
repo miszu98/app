@@ -1,0 +1,34 @@
+version: '3.1'
+services:
+  db:
+    container_name: test_db
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: 123
+      POSTGRES_USER: root
+      POSTGRES_DB: testowa
+    ports:
+      - '6000:5432'
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2000:1000"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/testowa
+    depends_on:
+      - db
+  jenkins:
+    container_name: jenkins
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - /home/michal.malek/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
