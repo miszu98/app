@@ -14,4 +14,9 @@ class AppApplicationTests {
     void exampleTest() {
         assertEquals(2, 1 + 1);
     }
+
+    @Test
+    void exampleTest2() {
+        assertEquals(3, 1 + 2);
+    }
 }
